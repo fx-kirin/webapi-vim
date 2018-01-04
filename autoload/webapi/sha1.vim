@@ -34,7 +34,11 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! webapi#sha1#sha1(str) abort
-  return s:SHA1Digest(s:str2bytes(a:str))
+  python import hashlib
+  python import vim
+  python string = vim.eval("a:str")
+  python vim.command("let hash = '%s'"%(hashlib.sha1(string).hexdigest()))
+  return hash
 endfunction
 
 function! webapi#sha1#sha1bin(bin) abort
